@@ -289,7 +289,7 @@ confGraph()
 dRings = {'R1':0,'R2':0,'R3':0}
 setBars(dRings)
 
-#Action Buttons
+#Action Buttons 4/5 and 1/5(8/40)
 
 btnRead = Button(Action, 
 				text= "Read", 
@@ -304,10 +304,10 @@ btnRead = Button(Action,
 				border= 2,
 				cursor= "hand1",
 				font= ("Arial", 10, "bold"),
-				width=int(screen_width/10), height=int(screen_height/10),
+				width=int(screen_width*6/40), height=int(screen_height/10),
 				command=lambda:funRead(), 
 				compound="c",)
-btnRead.place(x=int(screen_width/20), y=int(screen_height*3/10))
+btnRead.place(x=int(screen_width/40), y=int(screen_height*3/10))
 
 btnAnalysis = Button(Action, 
 				text= "Analysis", 
