@@ -120,7 +120,8 @@ canvas.get_tk_widget().config(bg=bgBack)
 # ax.legend(loc='best', labelcolor=legendColor) #loc='upper right'
 
 #Progress bar
-progress = ttk.Progressbar(length=screen_width*4/5)
+ProgressState = DoubleVar(); ProgressState.set(0)
+progress = ttk.Progressbar(length=screen_width*4/5,maximum=100,variable=ProgressState)
 progress.place(x=0,y=screen_height*39/40,height=screen_height/40)
 
 #Second Plot
@@ -171,7 +172,8 @@ def setRings(lArray):
 	GPIO.output(lBTO[2],lArray["R3"])
 """
 
-def animate(frames,line,xdata,ydata,index):
+def animate(frames,line,xdata,ydata,index,max):
+	ProgressState.set(100*frames/max)
 	if index == 0:
 		if frames < 1000:
 			line.set_xdata(xdata[-frames:])
@@ -195,7 +197,7 @@ def namedState(sBTO,sRing):
 	strRing = "Detect" if sRing == 1 else "Empty"
 	return strBTO+strRing
 
-def plotGraph(dRing,dBTO,labelStr,lStyle,lColor,lWidth,index):
+def plotGraph(dRing,dBTO,labelStr,lStyle,lColor,lWidth,index,max):
 	global anim
 	#Example Res1InactiveEmpty Active/Inactive Detect/Empty
 	res1 = 'Res1'+namedState(dBTO["R1"],dRing["R1"])
@@ -207,9 +209,9 @@ def plotGraph(dRing,dBTO,labelStr,lStyle,lColor,lWidth,index):
 	wavelength = np.array(data.get('wavelength'))[4500:5500]
 	result, = ax.plot(wavelength[0],gain[0], label=labelStr, linestyle=lStyle, color=lColor, linewidth=lWidth)
 	if index == 0:
-		anim[index] = animation.FuncAnimation(fig, partial(animate,line=result,xdata=wavelength,ydata=gain,index=index), np.arange(0,1000,10), interval=2, repeat=False)
+		anim[index] = animation.FuncAnimation(fig, partial(animate,line=result,xdata=wavelength,ydata=gain,index=index,max=max), np.arange(0,1000,10), interval=1, repeat=False)
 	else:
-		anim[index] = animation.FuncAnimation(fig, partial(animate,line=result,xdata=wavelength,ydata=gain,index=index), np.arange(0,4000,10), interval=2, repeat=False)
+		anim[index] = animation.FuncAnimation(fig, partial(animate,line=result,xdata=wavelength,ydata=gain,index=index,max=max), np.arange(0,4000,10), interval=1, repeat=False)
 
 def confGraph():
 	ax.set_title('Circuit Output')
@@ -255,7 +257,7 @@ def funRead():
 	ax2.clear()
 	dRings = {'R1':1,'R2':0,'R3':0} #getRings Fun
 	dBTO = {'R1':0,'R2':0,'R3':0} #getBTOs Fun
-	plotGraph(dRings,dBTO,"Actual State","solid","blue",2,0)
+	plotGraph(dRings,dBTO,"Actual State","solid","blue",2,0,990)
 	confGraph()
 	setBars(dRings)
 	setIndicators(dRings)
@@ -270,13 +272,13 @@ def funAnalysis():
 	confGraph()
 	dRings = {'R1':1,'R2':0,'R3':1} #getRings Fun
 	dBTO = {'R1':0,'R2':0,'R3':0}
-	plotGraph(dRings,dBTO,"No BTO","solid",rMixedColor,4,0)
+	plotGraph(dRings,dBTO,"No BTO","solid",rMixedColor,4,0,3990)
 	dBTO = {'R1':1,'R2':0,'R3':0}
-	plotGraph(dRings,dBTO,"BTO 1","solid",rColors[0],6,1)
+	plotGraph(dRings,dBTO,"BTO 1","solid",rColors[0],6,1,3990)
 	dBTO = {'R1':0,'R2':1,'R3':0}
-	plotGraph(dRings,dBTO,"BTO 2","solid",rColors[1],4,2)
+	plotGraph(dRings,dBTO,"BTO 2","solid",rColors[1],4,2,3990)
 	dBTO = {'R1':0,'R2':0,'R3':1}
-	plotGraph(dRings,dBTO,"BTO 3","solid",rColors[2],2,3)
+	plotGraph(dRings,dBTO,"BTO 3","solid",rColors[2],2,3,3990)
 	setBars(dRings)
 	setIndicators(dRings)
 	ax.legend(loc='best', labelcolor=legendColor) #loc='upper right'
@@ -303,8 +305,8 @@ btnRead = Button(Action,
 				highlightcolor= "WHITE",
 				border= 2,
 				cursor= "hand1",
-				font= ("Arial", 10, "bold"),
-				width=int(screen_width*6/40), height=int(screen_height/10),
+				font= ("Arial", int(screen_height/50), "bold"),
+				width=int(screen_width/10), height=int(screen_height/10),
 				command=lambda:funRead(), 
 				compound="c",)
 Action.update()
@@ -322,7 +324,7 @@ btnAnalysis = Button(Action,
 				highlightcolor= "WHITE",
 				border= 2,
 				cursor= "hand1",
-				font= ("Arial", 10, "bold"),
+				font= ("Arial", int(screen_height/50), "bold"),
 				width=int(screen_width/10), height=int(screen_height/10),
 				command=lambda:funAnalysis(), 
 				compound="c",)
