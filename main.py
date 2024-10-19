@@ -307,7 +307,8 @@ btnRead = Button(Action,
 				width=int(screen_width*6/40), height=int(screen_height/10),
 				command=lambda:funRead(), 
 				compound="c",)
-btnRead.place(x=int(screen_width/40), y=int(screen_height*3/10))
+Action.update()
+btnRead.place(x=Action.winfo_width()/2, y=int(screen_height*3/10),anchor="n")
 
 btnAnalysis = Button(Action, 
 				text= "Analysis", 
@@ -325,7 +326,8 @@ btnAnalysis = Button(Action,
 				width=int(screen_width/10), height=int(screen_height/10),
 				command=lambda:funAnalysis(), 
 				compound="c",)
-btnAnalysis.place(x=int(screen_width/20), y=int(screen_height*6/10))
+btnAnalysis.place(x=Action.winfo_width()/2, y=int(screen_height*6/10),anchor="n")
+#btnAnalysis.place(x=int(screen_width/20), y=int(screen_height*6/10))
 
 #Root commands
 root.bind('<Escape>', close)
