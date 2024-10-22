@@ -177,7 +177,7 @@ def setBTO(lArray):
 	print("setBTO")
 	print(lArray)
 
-def animate(frames,line,xdata,ydata,index):
+def animate(frames,line,xdata,ydata,index,max):
 	ProgressState.set(100*frames/max)
 	if index == 0:
 		if frames < 1000:
