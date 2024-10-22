@@ -304,7 +304,7 @@ def funAnalysis():
 	ax.clear()
 	ax2.clear()
 	confGraph()
-	dRings = {'R1':0,'R2':0,'R3':1} #getRings() #getRings Fun
+	dRings = getRings() #getRings() #getRings Fun
 	setRings(dRings)
 	dBTO = {'R1':0,'R2':0,'R3':0}
 	plotGraph(dRings,dBTO,"No BTO","solid",rMixedColor,4,0,3990)
