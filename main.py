@@ -6,7 +6,7 @@ from tkinter import ttk
 
 import os
 
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 import random
 
@@ -25,7 +25,7 @@ import time
 #Tkinter Start
 root= Tk()
 root.title("PockelsLab")
-#root.attributes('-fullscreen',True)
+root.attributes('-fullscreen',True)
 
 #Screen Properties
 screen_width = root.winfo_screenwidth()
@@ -46,15 +46,13 @@ def Obtain(srcS,index):
 
 
 #Pins Definition
-lRing = [1,2,3]
-lBTO = [1,2,3]
+lRing = [33,35,37]
+lBTO = [13,29,31]
 
-bRing = [1,2,3]
-bBTO = [1,2,3]
+bRing = [15,32,36]
+bBTO = [16,38,40]
 
-system = "GPIO"
 
-""""
 #GPIO start
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
@@ -74,7 +72,7 @@ GPIO.setup(bRing[2], GPIO.IN)
 GPIO.setup(bBTO[0], GPIO.IN)
 GPIO.setup(bBTO[1], GPIO.IN)
 GPIO.setup(bBTO[2], GPIO.IN)
-"""
+
 
 def close(event):
 	root.quit(); root.destroy()
@@ -85,7 +83,7 @@ anim = [0]*4
 #Colors
 bluetec = "#0039A6"
 
-rColors = ["RED", "GREEN", "BLUE"]
+rColors = ["BLUE", "RED", "GREEN"]
 rMixedColor = "WHITE"
 bgBack = 'BLACK'
 labelColor = "WHITE"
@@ -148,7 +146,7 @@ Ring2 = ledCanvas.create_oval(cSpace*2+cDiam, chSpace, cSpace*2+cDiam*2, chSpace
 Ring3 = ledCanvas.create_oval(cSpace*3+cDiam*2, chSpace, cSpace*3+cDiam*3, chSpace+cDiam, fill=bgBack, width=int(cHeight/15), outline=faceCol)
 
 #Action buttons
-"""
+
 def getRings():
 	dRings = {'R1':1 if GPIO.input(bRing[0]) else 0,
 	'R2':1 if GPIO.input(bRing[1]) else 0,
@@ -166,30 +164,35 @@ def setRings(lArray):
 	GPIO.output(lRing[1],lArray["R2"])
 	GPIO.output(lRing[2],lArray["R3"])
 
-def setRings(lArray):
+def setBTO(lArray):
 	GPIO.output(lBTO[0],lArray["R1"])
 	GPIO.output(lBTO[1],lArray["R2"])
 	GPIO.output(lBTO[2],lArray["R3"])
-"""
 
-def animate(frames,line,xdata,ydata,index,max):
+def animate(frames,line,xdata,ydata,index,max,dBTO):
 	ProgressState.set(100*frames/max)
 	if index == 0:
 		if frames < 1000:
 			line.set_xdata(xdata[-frames:])
 			line.set_ydata(ydata[-frames:])
+			setBTO(dBTO)
 	elif index == 1:
 		if frames < 2000 and frames > 999:
 			line.set_xdata(xdata[-frames+1000:])
 			line.set_ydata(ydata[-frames+1000:])
+			setBTO(dBTO)
 	elif index == 2:
 		if frames < 3000 and frames > 1999:
 			line.set_xdata(xdata[-frames+2000:])
 			line.set_ydata(ydata[-frames+2000:])
+			setBTO(dBTO)
 	elif index == 3:
 		if frames < 4000 and frames > 2999:
 			line.set_xdata(xdata[-frames+3000:])
 			line.set_ydata(ydata[-frames+3000:])
+			setBTO(dBTO)
+		elif frames>4000:
+			setBTO({'R1':0,'R2':0,'R3':0})
 	return line
 
 def namedState(sBTO,sRing):
@@ -209,9 +212,9 @@ def plotGraph(dRing,dBTO,labelStr,lStyle,lColor,lWidth,index,max):
 	wavelength = np.array(data.get('wavelength'))[4500:5500]
 	result, = ax.plot(wavelength[0],gain[0], label=labelStr, linestyle=lStyle, color=lColor, linewidth=lWidth)
 	if index == 0:
-		anim[index] = animation.FuncAnimation(fig, partial(animate,line=result,xdata=wavelength,ydata=gain,index=index,max=max), np.arange(0,1000,10), interval=1, repeat=False)
+		anim[index] = animation.FuncAnimation(fig, partial(animate,line=result,xdata=wavelength,ydata=gain,index=index,max=max,dBTO=dBTO), np.arange(0,1000,10), interval=1, repeat=False)
 	else:
-		anim[index] = animation.FuncAnimation(fig, partial(animate,line=result,xdata=wavelength,ydata=gain,index=index,max=max), np.arange(0,4000,10), interval=1, repeat=False)
+		anim[index] = animation.FuncAnimation(fig, partial(animate,line=result,xdata=wavelength,ydata=gain,index=index,max=max,dBTO=dBTO), np.arange(0,4010,10), interval=1, repeat=False)
 
 def confGraph():
 	ax.set_title('Circuit Output')
@@ -255,8 +258,10 @@ def funRead():
 	print("Reading")
 	ax.clear()
 	ax2.clear()
-	dRings = {'R1':1,'R2':0,'R3':0} #getRings Fun
-	dBTO = {'R1':0,'R2':0,'R3':0} #getBTOs Fun
+	dRings = getRings() #getRings Fun
+	setRings(dRings)
+	dBTO = getBTO() #getBTOs Fun
+	setBTO(dBTO)
 	plotGraph(dRings,dBTO,"Actual State","solid","blue",2,0,990)
 	confGraph()
 	setBars(dRings)
@@ -270,7 +275,8 @@ def funAnalysis():
 	ax.clear()
 	ax2.clear()
 	confGraph()
-	dRings = {'R1':1,'R2':0,'R3':1} #getRings Fun
+	dRings = getRings() #getRings Fun
+	setRings(dRings)
 	dBTO = {'R1':0,'R2':0,'R3':0}
 	plotGraph(dRings,dBTO,"No BTO","solid",rMixedColor,4,0,3990)
 	dBTO = {'R1':1,'R2':0,'R3':0}
