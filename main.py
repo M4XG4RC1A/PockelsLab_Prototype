@@ -183,21 +183,36 @@ def animateSimple(frames,line,xdata,ydata,max):
 	line.set_ydata(ydata[-frames:])
 	return line
 
+state = 4
+
 def animateMulti(frames,line1,line2,line3,line4,xdata,ydata1,ydata2,ydata3,ydata4,max):
 	ProgressState.set(100*frames/max)
 	if frames < 1000:
 		line1.set_xdata(xdata[-frames:])
 		line1.set_ydata(ydata1[-frames:])
+		if state != 0:
+			setBTO({'R1':0,'R2':0,'R3':0})
+			state = 0
 	elif frames < 2000 and frames > 999:
 		line2.set_xdata(xdata[-frames+1000:])
 		line2.set_ydata(ydata2[-frames+1000:])
+		if state != 1:
+			setBTO({'R1':1,'R2':0,'R3':0})
+			state = 1
 	elif frames < 3000 and frames > 1999:
 		line3.set_xdata(xdata[-frames+2000:])
 		line3.set_ydata(ydata3[-frames+2000:])
+		if state != 2:
+			setBTO({'R1':0,'R2':1,'R3':0})
+			state = 2
 	elif frames < 4000 and frames > 2999:
 		line4.set_xdata(xdata[-frames+3000:])
 		line4.set_ydata(ydata4[-frames+3000:])
+		if state != 3:
+			setBTO({'R1':0,'R2':0,'R3':1})
+			state = 3
 	else:
+		setBTO({'R1':0,'R2':0,'R3':0})
 		print("End")
 	return (line1,line2,line3,line4)
 """
