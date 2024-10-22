@@ -243,7 +243,7 @@ def plotGraph(dRing,dBTO,labelStr,lStyle,lColor,lWidth,index,max):
 	if index == 0:
 		anim[index] = animation.FuncAnimation(fig, partial(animate,line=result,xdata=wavelength,ydata=gain,index=index,max=max), np.arange(0,1000,10), interval=1, repeat=False)
 	else:
-		anim[index] = animation.FuncAnimation(fig, partial(animate,line=result,xdata=wavelength,ydata=gain,index=index,max=max,dBTO=dBTO), np.arange(0,4010,10), interval=1, repeat=False)
+		anim[index] = animation.FuncAnimation(fig, partial(animate,line=result,xdata=wavelength,ydata=gain,index=index,max=max), np.arange(0,4010,10), interval=1, repeat=False)
 
 def confGraph():
 	ax.set_title('Circuit Output')
@@ -304,7 +304,7 @@ def funAnalysis():
 	ax.clear()
 	ax2.clear()
 	confGraph()
-	dRings = getRings() #getRings() #getRings Fun
+	dRings = {'R1':0,'R2':0,'R3':0} #getRings() #getRings Fun
 	setRings(dRings)
 	dBTO = {'R1':0,'R2':0,'R3':0}
 	plotGraph(dRings,dBTO,"No BTO","solid",rMixedColor,4,0,3990)
