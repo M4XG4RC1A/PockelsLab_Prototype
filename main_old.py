@@ -177,29 +177,25 @@ def setBTO(lArray):
 	print("setBTO")
 	print(lArray)
 
-def animateSimple(frames,line,xdata,ydata,max):
+def animate(frames,line,xdata,ydata,index,max):
 	ProgressState.set(100*frames/max)
-	line.set_xdata(xdata[-frames:])
-	line.set_ydata(ydata[-frames:])
+	if index == 0:
+		if frames < 1000:
+			line.set_xdata(xdata[-frames:])
+			line.set_ydata(ydata[-frames:])
+	elif index == 1:
+		if frames < 2000 and frames > 999:
+			line.set_xdata(xdata[-frames+1000:])
+			line.set_ydata(ydata[-frames+1000:])
+	elif index == 2:
+		if frames < 3000 and frames > 1999:
+			line.set_xdata(xdata[-frames+2000:])
+			line.set_ydata(ydata[-frames+2000:])
+	elif index == 3:
+		if frames < 4000 and frames > 2999:
+			line.set_xdata(xdata[-frames+3000:])
+			line.set_ydata(ydata[-frames+3000:])
 	return line
-
-def animateMulti(frames,line1,line2,line3,line4,xdata,ydata1,ydata2,ydata3,ydata4,max):
-	ProgressState.set(100*frames/max)
-	if frames < 1000:
-		line1.set_xdata(xdata[-frames:])
-		line1.set_ydata(ydata1[-frames:])
-	elif frames < 2000 and frames > 999:
-		line2.set_xdata(xdata[-frames+1000:])
-		line2.set_ydata(ydata2[-frames+1000:])
-	elif frames < 3000 and frames > 1999:
-		line3.set_xdata(xdata[-frames+2000:])
-		line3.set_ydata(ydata3[-frames+2000:])
-	elif frames < 4000 and frames > 2999:
-		line4.set_xdata(xdata[-frames+3000:])
-		line4.set_ydata(ydata4[-frames+3000:])
-	else:
-		print("End")
-	return (line1,line2,line3,line4)
 """
 def animate(frames,line,xdata,ydata,index,max,dBTO):
 	ProgressState.set(100*frames/max)
@@ -233,7 +229,7 @@ def namedState(sBTO,sRing):
 	strRing = "Detect" if sRing == 1 else "Empty"
 	return strBTO+strRing
 
-def plotGraph(dRing,dBTO,labelStr,lStyle,lColor,lWidth,max):
+def plotGraph(dRing,dBTO,labelStr,lStyle,lColor,lWidth,index,max):
 	global anim
 	#Example Res1InactiveEmpty Active/Inactive Detect/Empty
 	res1 = 'Res1'+namedState(dBTO["R1"],dRing["R1"])
@@ -244,63 +240,10 @@ def plotGraph(dRing,dBTO,labelStr,lStyle,lColor,lWidth,max):
 	gain = np.array(data.get('gain'))[4500:5500]
 	wavelength = np.array(data.get('wavelength'))[4500:5500]
 	result, = ax.plot(wavelength[0],gain[0], label=labelStr, linestyle=lStyle, color=lColor, linewidth=lWidth)
-	anim = animation.FuncAnimation(fig, partial(animateSimple,line=result,xdata=wavelength,ydata=gain,max=max), np.arange(0,1001,20), interval=1, repeat=False)
-
-def plotGraphMulti(dRing,
-				   labelStr1,lStyle1,lColor1,lWidth1,
-				   labelStr2,lStyle2,lColor2,lWidth2,
-				   labelStr3,lStyle3,lColor3,lWidth3,
-				   labelStr4,lStyle4,lColor4,lWidth4,
-				   max):
-	global anim
-	#Example Res1InactiveEmpty Active/Inactive Detect/Empty
-
-	#Plot 1
-	dBTO = {'R1':0,'R2':0,'R3':0}
-	res1 = 'Res1'+namedState(dBTO["R1"],dRing["R1"])
-	res2 = 'Res2'+namedState(dBTO["R2"],dRing["R2"])
-	res3 = 'Res3'+namedState(dBTO["R3"],dRing["R3"])
-	path = "./Simulation/"+GC_State+"/"+res1+"/"+res2+"/"+res3+"/Circuit"+GC_State+"_"+res1+"_"+res2+"_"+res3+".mat";
-	data = scipy.io.loadmat(path)
-	gain1 = np.array(data.get('gain'))[4500:5500]
-	wavelength = np.array(data.get('wavelength'))[4500:5500]
-	result1, = ax.plot(wavelength[0],gain[0], label=labelStr1, linestyle=lStyle1, color=lColor1, linewidth=lWidth1)
-
-	#Plot 2
-	dBTO = {'R1':1,'R2':0,'R3':0}
-	res1 = 'Res1'+namedState(dBTO["R1"],dRing["R1"])
-	res2 = 'Res2'+namedState(dBTO["R2"],dRing["R2"])
-	res3 = 'Res3'+namedState(dBTO["R3"],dRing["R3"])
-	path = "./Simulation/"+GC_State+"/"+res1+"/"+res2+"/"+res3+"/Circuit"+GC_State+"_"+res1+"_"+res2+"_"+res3+".mat";
-	data = scipy.io.loadmat(path)
-	gain2 = np.array(data.get('gain'))[4500:5500]
-	wavelength = np.array(data.get('wavelength'))[4500:5500]
-	result2, = ax.plot(wavelength[0],gain[0], label=labelStr2, linestyle=lStyle2, color=lColor2, linewidth=lWidth2)
-
-	#Plot 3
-	dBTO = {'R1':0,'R2':1,'R3':0}
-	res1 = 'Res1'+namedState(dBTO["R1"],dRing["R1"])
-	res2 = 'Res2'+namedState(dBTO["R2"],dRing["R2"])
-	res3 = 'Res3'+namedState(dBTO["R3"],dRing["R3"])
-	path = "./Simulation/"+GC_State+"/"+res1+"/"+res2+"/"+res3+"/Circuit"+GC_State+"_"+res1+"_"+res2+"_"+res3+".mat";
-	data = scipy.io.loadmat(path)
-	gain3 = np.array(data.get('gain'))[4500:5500]
-	wavelength = np.array(data.get('wavelength'))[4500:5500]
-	result3, = ax.plot(wavelength[0],gain[0], label=labelStr3, linestyle=lStyle3, color=lColor3, linewidth=lWidth3)
-
-	#Plot 4
-	dBTO = {'R1':0,'R2':0,'R3':1}
-	res1 = 'Res1'+namedState(dBTO["R1"],dRing["R1"])
-	res2 = 'Res2'+namedState(dBTO["R2"],dRing["R2"])
-	res3 = 'Res3'+namedState(dBTO["R3"],dRing["R3"])
-	path = "./Simulation/"+GC_State+"/"+res1+"/"+res2+"/"+res3+"/Circuit"+GC_State+"_"+res1+"_"+res2+"_"+res3+".mat";
-	data = scipy.io.loadmat(path)
-	gain4 = np.array(data.get('gain'))[4500:5500]
-	wavelength = np.array(data.get('wavelength'))[4500:5500]
-	result4, = ax.plot(wavelength[0],gain[0], label=labelStr4, linestyle=lStyle4, color=lColor4, linewidth=lWidth4)
-
-	#animateMulti(frames,line1,line2,line3,line4,xdata,ydata,max):
-	anim = animation.FuncAnimation(fig, partial(animateSimple,line1=result1,line2=result2,line3=result3,line4=result4,xdata=wavelength,ydata1=gain1,ydata2=gain2,ydata3=gain3,ydata4=gain4,max=max), np.arange(0,4001,20), interval=1, repeat=False)
+	if index == 0:
+		anim[index] = animation.FuncAnimation(fig, partial(animate,line=result,xdata=wavelength,ydata=gain,index=index,max=max), np.arange(0,1000,10), interval=1, repeat=False)
+	else:
+		anim[index] = animation.FuncAnimation(fig, partial(animate,line=result,xdata=wavelength,ydata=gain,index=index,max=max), np.arange(0,4010,10), interval=1, repeat=False)
 
 def confGraph():
 	ax.set_title('Circuit Output')
@@ -348,7 +291,7 @@ def funRead():
 	setRings(dRings)
 	dBTO = getBTO() #getBTOs Fun
 	setBTO(dBTO)
-	plotGraph(dRings,dBTO,"Actual State","solid","blue",2,1000)
+	plotGraph(dRings,dBTO,"Actual State","solid","blue",2,0,990)
 	confGraph()
 	setBars(dRings)
 	setIndicators(dRings)
@@ -363,12 +306,14 @@ def funAnalysis():
 	confGraph()
 	dRings = {'R1':0,'R2':0,'R3':0} #getRings() #getRings Fun
 	setRings(dRings)
-	plotGraph(dRings,
-		   "No BTO","solid",rMixedColor,4,0,
-		   "BTO 1","solid",rColors[0],6,1,
-		   "BTO 2","solid",rColors[1],4,2,
-		   "BTO 3","solid",rColors[2],2,3,
-		   4000)
+	dBTO = {'R1':0,'R2':0,'R3':0}
+	plotGraph(dRings,dBTO,"No BTO","solid",rMixedColor,4,0,3990)
+	dBTO = {'R1':1,'R2':0,'R3':0}
+	plotGraph(dRings,dBTO,"BTO 1","solid",rColors[0],6,1,3990)
+	dBTO = {'R1':0,'R2':1,'R3':0}
+	plotGraph(dRings,dBTO,"BTO 2","solid",rColors[1],4,2,3990)
+	dBTO = {'R1':0,'R2':0,'R3':1}
+	plotGraph(dRings,dBTO,"BTO 3","solid",rColors[2],2,3,3990)
 	setBars(dRings)
 	setIndicators(dRings)
 	ax.legend(loc='best', labelcolor=legendColor) #loc='upper right'
