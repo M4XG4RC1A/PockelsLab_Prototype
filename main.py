@@ -177,6 +177,26 @@ def setBTO(lArray):
 	print("setBTO")
 	print(lArray)
 
+def animate(frames,line,xdata,ydata,index):
+	ProgressState.set(100*frames/max)
+	if index == 0:
+		if frames < 1000:
+			line.set_xdata(xdata[-frames:])
+			line.set_ydata(ydata[-frames:])
+	elif index == 1:
+		if frames < 2000 and frames > 999:
+			line.set_xdata(xdata[-frames+1000:])
+			line.set_ydata(ydata[-frames+1000:])
+	elif index == 2:
+		if frames < 3000 and frames > 1999:
+			line.set_xdata(xdata[-frames+2000:])
+			line.set_ydata(ydata[-frames+2000:])
+	elif index == 3:
+		if frames < 4000 and frames > 2999:
+			line.set_xdata(xdata[-frames+3000:])
+			line.set_ydata(ydata[-frames+3000:])
+	return line
+"""
 def animate(frames,line,xdata,ydata,index,max,dBTO):
 	ProgressState.set(100*frames/max)
 	if index == 0:
@@ -203,7 +223,7 @@ def animate(frames,line,xdata,ydata,index,max,dBTO):
 			#setBTO({'R1':0,'R2':0,'R3':0})
 			print("End")
 	return line
-
+"""
 def namedState(sBTO,sRing):
 	strBTO = "Active" if sBTO == 1 else "Inactive"
 	strRing = "Detect" if sRing == 1 else "Empty"
@@ -221,7 +241,7 @@ def plotGraph(dRing,dBTO,labelStr,lStyle,lColor,lWidth,index,max):
 	wavelength = np.array(data.get('wavelength'))[4500:5500]
 	result, = ax.plot(wavelength[0],gain[0], label=labelStr, linestyle=lStyle, color=lColor, linewidth=lWidth)
 	if index == 0:
-		anim[index] = animation.FuncAnimation(fig, partial(animate,line=result,xdata=wavelength,ydata=gain,index=index,max=max,dBTO=dBTO), np.arange(0,1000,10), interval=1, repeat=False)
+		anim[index] = animation.FuncAnimation(fig, partial(animate,line=result,xdata=wavelength,ydata=gain,index=index,max=max), np.arange(0,1000,10), interval=1, repeat=False)
 	else:
 		anim[index] = animation.FuncAnimation(fig, partial(animate,line=result,xdata=wavelength,ydata=gain,index=index,max=max,dBTO=dBTO), np.arange(0,4010,10), interval=1, repeat=False)
 
@@ -284,7 +304,7 @@ def funAnalysis():
 	ax.clear()
 	ax2.clear()
 	confGraph()
-	dRings = getRings() #getRings Fun
+	dRings = {'R1':0,'R2':0,'R3':1} #getRings() #getRings Fun
 	setRings(dRings)
 	dBTO = {'R1':0,'R2':0,'R3':0}
 	plotGraph(dRings,dBTO,"No BTO","solid",rMixedColor,4,0,3990)
