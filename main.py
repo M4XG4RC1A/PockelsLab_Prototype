@@ -300,7 +300,7 @@ def plotGraphMulti(dRing,
 	result4, = ax.plot(wavelength[0],gain4[0], label=labelStr4, linestyle=lStyle4, color=lColor4, linewidth=lWidth4)
 
 	#animateMulti(frames,line1,line2,line3,line4,xdata,ydata,max):
-	anim = animation.FuncAnimation(fig, partial(animateSimple,line1=result1,line2=result2,line3=result3,line4=result4,xdata=wavelength,ydata1=gain1,ydata2=gain2,ydata3=gain3,ydata4=gain4,max=max), np.arange(0,4001,20), interval=1, repeat=False)
+	anim = animation.FuncAnimation(fig, partial(animateMulti,line1=result1,line2=result2,line3=result3,line4=result4,xdata=wavelength,ydata1=gain1,ydata2=gain2,ydata3=gain3,ydata4=gain4,max=max), np.arange(0,4001,20), interval=1, repeat=False)
 
 def confGraph():
 	ax.set_title('Circuit Output')
