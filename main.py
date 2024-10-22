@@ -264,7 +264,7 @@ def plotGraphMulti(dRing,
 	data = scipy.io.loadmat(path)
 	gain1 = np.array(data.get('gain'))[4500:5500]
 	wavelength = np.array(data.get('wavelength'))[4500:5500]
-	result1, = ax.plot(wavelength[0],gain[0], label=labelStr1, linestyle=lStyle1, color=lColor1, linewidth=lWidth1)
+	result1, = ax.plot(wavelength[0],gain1[0], label=labelStr1, linestyle=lStyle1, color=lColor1, linewidth=lWidth1)
 
 	#Plot 2
 	dBTO = {'R1':1,'R2':0,'R3':0}
@@ -275,7 +275,7 @@ def plotGraphMulti(dRing,
 	data = scipy.io.loadmat(path)
 	gain2 = np.array(data.get('gain'))[4500:5500]
 	wavelength = np.array(data.get('wavelength'))[4500:5500]
-	result2, = ax.plot(wavelength[0],gain[0], label=labelStr2, linestyle=lStyle2, color=lColor2, linewidth=lWidth2)
+	result2, = ax.plot(wavelength[0],gain2[0], label=labelStr2, linestyle=lStyle2, color=lColor2, linewidth=lWidth2)
 
 	#Plot 3
 	dBTO = {'R1':0,'R2':1,'R3':0}
@@ -286,7 +286,7 @@ def plotGraphMulti(dRing,
 	data = scipy.io.loadmat(path)
 	gain3 = np.array(data.get('gain'))[4500:5500]
 	wavelength = np.array(data.get('wavelength'))[4500:5500]
-	result3, = ax.plot(wavelength[0],gain[0], label=labelStr3, linestyle=lStyle3, color=lColor3, linewidth=lWidth3)
+	result3, = ax.plot(wavelength[0],gain3[0], label=labelStr3, linestyle=lStyle3, color=lColor3, linewidth=lWidth3)
 
 	#Plot 4
 	dBTO = {'R1':0,'R2':0,'R3':1}
@@ -297,7 +297,7 @@ def plotGraphMulti(dRing,
 	data = scipy.io.loadmat(path)
 	gain4 = np.array(data.get('gain'))[4500:5500]
 	wavelength = np.array(data.get('wavelength'))[4500:5500]
-	result4, = ax.plot(wavelength[0],gain[0], label=labelStr4, linestyle=lStyle4, color=lColor4, linewidth=lWidth4)
+	result4, = ax.plot(wavelength[0],gain4[0], label=labelStr4, linestyle=lStyle4, color=lColor4, linewidth=lWidth4)
 
 	#animateMulti(frames,line1,line2,line3,line4,xdata,ydata,max):
 	anim = animation.FuncAnimation(fig, partial(animateSimple,line1=result1,line2=result2,line3=result3,line4=result4,xdata=wavelength,ydata1=gain1,ydata2=gain2,ydata3=gain3,ydata4=gain4,max=max), np.arange(0,4001,20), interval=1, repeat=False)
