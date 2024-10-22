@@ -183,24 +183,25 @@ def animate(frames,line,xdata,ydata,index,max,dBTO):
 		if frames < 1000:
 			line.set_xdata(xdata[-frames:])
 			line.set_ydata(ydata[-frames:])
-			setBTO(dBTO)
+			#setBTO(dBTO)
 	elif index == 1:
 		if frames < 2000 and frames > 999:
 			line.set_xdata(xdata[-frames+1000:])
 			line.set_ydata(ydata[-frames+1000:])
-			setBTO(dBTO)
+			#setBTO(dBTO)
 	elif index == 2:
 		if frames < 3000 and frames > 1999:
 			line.set_xdata(xdata[-frames+2000:])
 			line.set_ydata(ydata[-frames+2000:])
-			setBTO(dBTO)
+			#setBTO(dBTO)
 	elif index == 3:
 		if frames < 4000 and frames > 2999:
 			line.set_xdata(xdata[-frames+3000:])
 			line.set_ydata(ydata[-frames+3000:])
-			setBTO(dBTO)
+			#setBTO(dBTO)
 		elif frames>4000:
-			setBTO({'R1':0,'R2':0,'R3':0})
+			#setBTO({'R1':0,'R2':0,'R3':0})
+			print("End")
 	return line
 
 def namedState(sBTO,sRing):
