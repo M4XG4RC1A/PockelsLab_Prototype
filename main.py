@@ -183,9 +183,11 @@ def animateSimple(frames,line,xdata,ydata,max):
 	line.set_ydata(ydata[-frames:])
 	return line
 
-state = 4
+global state
+state = 0
 
 def animateMulti(frames,line1,line2,line3,line4,xdata,ydata1,ydata2,ydata3,ydata4,max):
+	global state
 	ProgressState.set(100*frames/max)
 	if frames < 1000:
 		line1.set_xdata(xdata[-frames:])
