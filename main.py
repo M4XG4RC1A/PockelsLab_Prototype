@@ -309,7 +309,7 @@ def confGraph():
 	ax.xaxis.label.set_color(labelColor); ax.yaxis.label.set_color(labelColor)
 	ax.tick_params(colors=gridColor)
 	ax.set_facecolor(faceCol)
-	ax.set(xlim=[1.5434e-6, 1.5533e-6], ylim=[-1.5, -0.1])
+	ax.set(xlim=[1.5434e-6, 1.5533e-6], ylim=[-1.7, -0.1])
 	#ax.grid(True)
 
 def setBars(dRings):
@@ -361,7 +361,7 @@ def funAnalysis():
 	ax.clear()
 	ax2.clear()
 	confGraph()
-	dRings = {'R1':0,'R2':0,'R3':0} #getRings() #getRings Fun
+	dRings = getRings() #getRings() #getRings Fun
 	setRings(dRings)
 	plotGraphMulti(dRings,
 		   "No BTO","solid",rMixedColor,4,
