@@ -151,23 +151,31 @@ def getRings():
 	dRings = {'R1':1 if GPIO.input(bRing[0]) else 0,
 	'R2':1 if GPIO.input(bRing[1]) else 0,
 	'R3':1 if GPIO.input(bRing[2]) else 0}
+	print("getRings")
+	print(dRings)
 	return dRings
 
 def getBTO():
 	dBTO = {'R1':1 if GPIO.input(bBTO[0]) else 0,
 	'R2':1 if GPIO.input(bBTO[1]) else 0,
 	'R3':1 if GPIO.input(bBTO[2]) else 0}
+	print("getRings")
+	print(dBTO)
 	return dBTO
 
 def setRings(lArray):
 	GPIO.output(lRing[0],lArray["R1"])
 	GPIO.output(lRing[1],lArray["R2"])
 	GPIO.output(lRing[2],lArray["R3"])
+	print("setRings")
+	print(lArray)
 
 def setBTO(lArray):
 	GPIO.output(lBTO[0],lArray["R1"])
 	GPIO.output(lBTO[1],lArray["R2"])
 	GPIO.output(lBTO[2],lArray["R3"])
+	print("setBTO")
+	print(lArray)
 
 def animate(frames,line,xdata,ydata,index,max,dBTO):
 	ProgressState.set(100*frames/max)
