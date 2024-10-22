@@ -364,10 +364,10 @@ def funAnalysis():
 	dRings = {'R1':0,'R2':0,'R3':0} #getRings() #getRings Fun
 	setRings(dRings)
 	plotGraphMulti(dRings,
-		   "No BTO","solid",rMixedColor,4,0,
-		   "BTO 1","solid",rColors[0],6,1,
-		   "BTO 2","solid",rColors[1],4,2,
-		   "BTO 3","solid",rColors[2],2,3,
+		   "No BTO","solid",rMixedColor,4,
+		   "BTO 1","solid",rColors[0],6,
+		   "BTO 2","solid",rColors[1],4,
+		   "BTO 3","solid",rColors[2],2,
 		   4000)
 	setBars(dRings)
 	setIndicators(dRings)
