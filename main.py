@@ -363,7 +363,7 @@ def funAnalysis():
 	confGraph()
 	dRings = {'R1':0,'R2':0,'R3':0} #getRings() #getRings Fun
 	setRings(dRings)
-	plotGraph(dRings,
+	plotGraphMulti(dRings,
 		   "No BTO","solid",rMixedColor,4,0,
 		   "BTO 1","solid",rColors[0],6,1,
 		   "BTO 2","solid",rColors[1],4,2,
