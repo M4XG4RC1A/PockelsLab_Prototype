@@ -279,7 +279,7 @@ def plotGraphMulti(dRing,
 	res1 = 'Res1'+namedState(dBTO["R1"],dRing["R1"])
 	res2 = 'Res2'+namedState(dBTO["R2"],dRing["R2"])
 	res3 = 'Res3'+namedState(dBTO["R3"],dRing["R3"])
-	path = "./Simulation/"+GC_State+"/"+res1+"/"+res2+"/"+res3+"/Circuit"+GC_State+"_"+res1+"_"+res2+"_"+res3+".mat";
+	path = "/home/pi/Desktop/PockelsLab_Prototype/Simulation/"+GC_State+"/"+res1+"/"+res2+"/"+res3+"/Circuit"+GC_State+"_"+res1+"_"+res2+"_"+res3+".mat";
 	data = scipy.io.loadmat(path)
 	gain1 = np.array(data.get('gain'))[4500:5500]
 	wavelength = np.array(data.get('wavelength'))[4500:5500]
@@ -290,7 +290,7 @@ def plotGraphMulti(dRing,
 	res1 = 'Res1'+namedState(dBTO["R1"],dRing["R1"])
 	res2 = 'Res2'+namedState(dBTO["R2"],dRing["R2"])
 	res3 = 'Res3'+namedState(dBTO["R3"],dRing["R3"])
-	path = "./Simulation/"+GC_State+"/"+res1+"/"+res2+"/"+res3+"/Circuit"+GC_State+"_"+res1+"_"+res2+"_"+res3+".mat";
+	path = "/home/pi/Desktop/PockelsLab_Prototype/Simulation/"+GC_State+"/"+res1+"/"+res2+"/"+res3+"/Circuit"+GC_State+"_"+res1+"_"+res2+"_"+res3+".mat";
 	data = scipy.io.loadmat(path)
 	gain2 = np.array(data.get('gain'))[4500:5500]
 	wavelength = np.array(data.get('wavelength'))[4500:5500]
@@ -301,7 +301,7 @@ def plotGraphMulti(dRing,
 	res1 = 'Res1'+namedState(dBTO["R1"],dRing["R1"])
 	res2 = 'Res2'+namedState(dBTO["R2"],dRing["R2"])
 	res3 = 'Res3'+namedState(dBTO["R3"],dRing["R3"])
-	path = "./Simulation/"+GC_State+"/"+res1+"/"+res2+"/"+res3+"/Circuit"+GC_State+"_"+res1+"_"+res2+"_"+res3+".mat";
+	path = "/home/pi/Desktop/PockelsLab_Prototype/Simulation/"+GC_State+"/"+res1+"/"+res2+"/"+res3+"/Circuit"+GC_State+"_"+res1+"_"+res2+"_"+res3+".mat";
 	data = scipy.io.loadmat(path)
 	gain3 = np.array(data.get('gain'))[4500:5500]
 	wavelength = np.array(data.get('wavelength'))[4500:5500]
@@ -312,7 +312,7 @@ def plotGraphMulti(dRing,
 	res1 = 'Res1'+namedState(dBTO["R1"],dRing["R1"])
 	res2 = 'Res2'+namedState(dBTO["R2"],dRing["R2"])
 	res3 = 'Res3'+namedState(dBTO["R3"],dRing["R3"])
-	path = "./Simulation/"+GC_State+"/"+res1+"/"+res2+"/"+res3+"/Circuit"+GC_State+"_"+res1+"_"+res2+"_"+res3+".mat";
+	path = "/home/pi/Desktop/PockelsLab_Prototype/Simulation/"+GC_State+"/"+res1+"/"+res2+"/"+res3+"/Circuit"+GC_State+"_"+res1+"_"+res2+"_"+res3+".mat";
 	data = scipy.io.loadmat(path)
 	gain4 = np.array(data.get('gain'))[4500:5500]
 	wavelength = np.array(data.get('wavelength'))[4500:5500]
