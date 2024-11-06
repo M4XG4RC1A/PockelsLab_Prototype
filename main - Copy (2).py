@@ -6,7 +6,7 @@ from tkinter import ttk
 
 import os
 
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 
 import random
 
@@ -53,25 +53,25 @@ bRing = [15,32,36]
 bBTO = [16,38,40]
 
 
-#GPIO start
-GPIO.setmode(GPIO.BOARD)
-GPIO.setwarnings(False)
+# #GPIO start
+# GPIO.setmode(GPIO.BOARD)
+# GPIO.setwarnings(False)
 
-GPIO.setup(lRing[0], GPIO.OUT)
-GPIO.setup(lRing[1], GPIO.OUT)
-GPIO.setup(lRing[2], GPIO.OUT)
+# GPIO.setup(lRing[0], GPIO.OUT)
+# GPIO.setup(lRing[1], GPIO.OUT)
+# GPIO.setup(lRing[2], GPIO.OUT)
 
-GPIO.setup(lBTO[0], GPIO.OUT)
-GPIO.setup(lBTO[1], GPIO.OUT)
-GPIO.setup(lBTO[2], GPIO.OUT)
+# GPIO.setup(lBTO[0], GPIO.OUT)
+# GPIO.setup(lBTO[1], GPIO.OUT)
+# GPIO.setup(lBTO[2], GPIO.OUT)
 
-GPIO.setup(bRing[0], GPIO.IN)
-GPIO.setup(bRing[1], GPIO.IN)
-GPIO.setup(bRing[2], GPIO.IN)
+# GPIO.setup(bRing[0], GPIO.IN)
+# GPIO.setup(bRing[1], GPIO.IN)
+# GPIO.setup(bRing[2], GPIO.IN)
 
-GPIO.setup(bBTO[0], GPIO.IN)
-GPIO.setup(bBTO[1], GPIO.IN)
-GPIO.setup(bBTO[2], GPIO.IN)
+# GPIO.setup(bBTO[0], GPIO.IN)
+# GPIO.setup(bBTO[1], GPIO.IN)
+# GPIO.setup(bBTO[2], GPIO.IN)
 
 
 def close(event):
@@ -148,32 +148,22 @@ Ring3 = ledCanvas.create_oval(cSpace*3+cDiam*2, chSpace, cSpace*3+cDiam*3, chSpa
 #Action buttons
 
 def getRings():
-	dRings = {'R1':1 if GPIO.input(bRing[0]) else 0,
-	'R2':1 if GPIO.input(bRing[1]) else 0,
-	'R3':1 if GPIO.input(bRing[2]) else 0}
+	dRings = {'R1':0,'R2':1,'R3':0}
 	print("getRings")
 	print(dRings)
 	return dRings
 
 def getBTO():
-	dBTO = {'R1':1 if GPIO.input(bBTO[0]) else 0,
-	'R2':1 if GPIO.input(bBTO[1]) else 0,
-	'R3':1 if GPIO.input(bBTO[2]) else 0}
+	dBTO = {'R1':0,'R2':1,'R3':0}
 	print("getRings")
 	print(dBTO)
 	return dBTO
 
 def setRings(lArray):
-	GPIO.output(lRing[0],lArray["R1"])
-	GPIO.output(lRing[1],lArray["R2"])
-	GPIO.output(lRing[2],lArray["R3"])
 	print("setRings")
 	print(lArray)
 
 def setBTO(lArray):
-	GPIO.output(lBTO[0],lArray["R1"])
-	GPIO.output(lBTO[1],lArray["R2"])
-	GPIO.output(lBTO[2],lArray["R3"])
 	print("setBTO")
 	print(lArray)
 
@@ -258,7 +248,7 @@ def plotGraph(dRing,dBTO,labelStr,lStyle,lColor,lWidth,max):
 	res1 = 'Res1'+namedState(dBTO["R1"],dRing["R1"])
 	res2 = 'Res2'+namedState(dBTO["R2"],dRing["R2"])
 	res3 = 'Res3'+namedState(dBTO["R3"],dRing["R3"])
-	path = "/home/pi/Desktop/PockelsLab_Prototype/Simulation/"+GC_State+"/"+res1+"/"+res2+"/"+res3+"/Circuit"+GC_State+"_"+res1+"_"+res2+"_"+res3+".mat";
+	path = "./Simulation/"+GC_State+"/"+res1+"/"+res2+"/"+res3+"/Circuit"+GC_State+"_"+res1+"_"+res2+"_"+res3+".mat";
 	data = scipy.io.loadmat(path)
 	gain = np.array(data.get('gain'))[4500:5500]
 	wavelength = np.array(data.get('wavelength'))[4500:5500]
